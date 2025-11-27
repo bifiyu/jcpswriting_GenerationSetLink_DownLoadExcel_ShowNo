@@ -534,7 +534,9 @@
                 const groupNumber = keyIndex + 1;
                 const groupChinese = numberToChinese(groupNumber);
 
-                const url = `student_tool.html?${baseQuery}&sid=${seatId}#apikey=${encodeURIComponent(apiKeyForThisStudent)}`;
+                const url = 
+                    `student_tool.html?${baseQuery}&sid=${seatId}&gid=${groupNumber}#apikey=${encodeURIComponent(apiKeyForThisStudent)}`;
+
 
                 const li = document.createElement('li');
                 li.style.marginBottom = '6px';
