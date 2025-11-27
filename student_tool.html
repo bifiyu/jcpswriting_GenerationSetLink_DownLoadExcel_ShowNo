@@ -389,27 +389,31 @@
             // --- 1. GET PARAMETERS & API KEY ---
             const params = new URLSearchParams(window.location.search);
             const sid = params.get('sid'); // 01 ~ 32
-            const gid = params.get('gid'); // 組別（阿拉伯數字）
-            function numberToChinese(num) {
-                const map = ['零','一','二','三','四','五','六','七','八','九','十'];
-                if (num <= 10) return map[num];
-                if (num < 20) return '十' + map[num - 10];
-                return num; // 超過 20 直接顯示阿拉伯
-            }
             // 例如顯示在標題下方：
             if (sid) {
                 const detailsBar = document.getElementById('comp-details');
                 const sidChip = document.createElement('span');
                 sidChip.className = 'bg-pink-100 text-pink-800 px-2 py-1 rounded-full text-sm';
-                sidChip.textContent = `第 ${sid} 號`;
+                sidChip.textContent = `座號：${sid} 號`;
                 detailsBar.appendChild(sidChip);
             }
+            const gid = params.get('gid');  // 接收組別
+            const detailsBar = document.getElementById('comp-details');
+
+            function numberToChinese(num) {
+                const map = ['零','一','二','三','四','五','六','七','八','九','十'];
+                if (num <= 10) return map[num];
+                if (num < 20) return '十' + map[num - 10];
+                return num; 
+            }
+
             if (gid) {
                 const groupChip = document.createElement('span');
                 groupChip.className = 'bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-sm';
                 groupChip.textContent = `第 ${numberToChinese(parseInt(gid))} 組`;
                 detailsBar.appendChild(groupChip);
             }
+
             const config = {
                 title: params.get('title') || "我最喜歡的角落",
                 level: params.get('level') || "四年級",
@@ -474,12 +478,9 @@
             }
 
             // --- 3. DYNAMICALLY BUILD THE PAGE CONTENT ---
-            function buildPage(treasureData) {
+            function buildPage(treasureData) { // Now accepts treasureData
                 document.getElementById('comp-title').textContent = config.title;
-
                 const detailsBar = document.getElementById('comp-details');
-
-                // 不要清空 sid/gid，直接 append 其他 chips
                 const levelChip = document.createElement('span');
                 levelChip.className = 'bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm';
                 levelChip.textContent = config.level;
